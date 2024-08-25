@@ -1,5 +1,3 @@
-
-text/x-generic dashboard.blade.php ( HTML document, ASCII text )
 <!DOCTYPE html>
 
 <html lang="en">
@@ -33,26 +31,8 @@ text/x-generic dashboard.blade.php ( HTML document, ASCII text )
 
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
-
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
-
-
-
-    <!-- Choose your prefered color scheme -->
-
-    <!-- <link href="css/light.css" rel="stylesheet"> -->
-
-    <!-- <link href="css/dark.css" rel="stylesheet"> -->
-
-
-
-    <!-- BEGIN SETTINGS -->
-
-    <!-- Remove this after purchasing -->
-
-    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Preahvihear&display=swap" rel="stylesheet">
 
     <link class="js-stylesheet" href="{{ url('appstack/css/light.css') }}" rel="stylesheet">
 
@@ -75,10 +55,11 @@ text/x-generic dashboard.blade.php ( HTML document, ASCII text )
     <!-- END SETTINGS -->
 
     
-
-    
-
     <style>
+
+        body {
+            font-family: "Montserrat", sans-serif;
+        }
 
         @media (max-width: 767px) {
 
@@ -152,42 +133,25 @@ text/x-generic dashboard.blade.php ( HTML document, ASCII text )
 
         body {
 
-            background-color: #f6f6f6 !important;
+            background-color: #fff !important;
 
             color: #1F1F1F !important;
 
         }
 
-        
-
-        body[data-theme=light] .sidebar {
-
-            background-color: #ED1B2E !important;
-
+        .sidebar {
+            border-right: 1px solid #d1e4f5;
+            background-color: #fff !important;
         }
 
-        
-
-        body[data-theme=light] .sidebar-content {
-
-            background-color: #ED1B2E !important;
-
+        .sidebar-link svg {
+            width: 16px;
+            height: 16px;
         }
 
-        
-
-        body[data-theme=light] .sidebar-link i, body[data-theme=light] .sidebar-link svg, body[data-theme=light] a.sidebar-link i, body[data-theme=light] a.sidebar-link svg {
-
-            color: #fff !important;
-
-        }
-
-        
-
-        body[data-theme=light] .sidebar-link, body[data-theme=light] a.sidebar-link {
-
-            color: #fff !important;
-
+        .sidebar-link, a.sidebar-link {
+            font-weight: 700;
+            color: #222 !important;
         }
 
     </style>
@@ -252,27 +216,14 @@ text/x-generic dashboard.blade.php ( HTML document, ASCII text )
 
 
 
-
-
-                
-
-
-
                 <ul class="sidebar-nav">
 
-                    
-
-                    <!--<li class="sidebar-item px-3">-->
-
-                    <!--</li>-->
-
-
-
+                
                     <li class="sidebar-item">
 
                         <a class="sidebar-link" href="{{ url('dashboard') }}">
 
-                            <i class="align-middle" data-feather="home"></i> <span class="align-middle">Dashboard</span>
+                            <i class="align-middle" data-lucide="home"></i> <span class="align-middle">Dashboard</span>
 
                         </a>
 
@@ -300,7 +251,7 @@ text/x-generic dashboard.blade.php ( HTML document, ASCII text )
 
                                 @if($menu->icon)
 
-                                 <i class="align-middle" data-feather="{{$menu->icon}}"></i>
+                                 <i class="align-middle" data-lucide="{{$menu->icon}}"></i>
 
                                 @endif
 
@@ -314,7 +265,7 @@ text/x-generic dashboard.blade.php ( HTML document, ASCII text )
 
                                 @if($menu->icon)
 
-                                <i class="align-middle" data-feather="{{$menu->icon}}"></i> 
+                                <i class="align-middle" data-lucide="{{$menu->icon}}"></i> 
 
                                 @endif
 
@@ -437,30 +388,6 @@ text/x-generic dashboard.blade.php ( HTML document, ASCII text )
                 
 
                 <h3 class="fw-bold text-dark mb-0">{{ $setting->getByKey('name') }}</h3>
-
-                
-
-                
-
-              
-
-
-
-                {{-- <ul class="navbar-nav">
-
-                    <li class="nav-item px-2">
-
-                        <a class="nav-link border rounded-3" href="{{url('pos')}}">
-
-                            Create Invoice
-
-                        </a>
-
-                    </li>
-
-                </ul> --}}
-
-
 
                 <div class="navbar-collapse collapse">
 
