@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\Invoice;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
@@ -16,7 +18,8 @@ class InvoiceController extends Controller
     {
         $invoices = Invoice::paginate(20);
         return view('invoice.index', [
-            'invoices' => $invoices
+            'invoices' => $invoices,
+
         ]);
     }
 
@@ -28,7 +31,9 @@ class InvoiceController extends Controller
     public function create()
     {
         return view('invoice.form', [
-            'invoice' => new Invoice()
+            'invoice' => new Invoice(),
+            'customers' => Customer::orderBy('name', 'ASC')->get(),
+            'products' => Product::orderBy('name', 'ASC')->get()
         ]);
     }
 

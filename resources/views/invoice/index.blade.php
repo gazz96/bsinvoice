@@ -55,58 +55,69 @@
                         </div>
                     </div>
                 @endif
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th class="text-dark">STATUS</th>
-                            <th class="text-dark">DUE</th>
-                            <th class="text-dark">DATE</th>
-                            <th class="text-dark">NUMBER</th>
-                            <th class="text-dark">CUSTOMER</th>
-                            <th class="text-dark text-end">AMOUNT</th>
-                            <th class="text-dark text-end">ACTIONS</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ([] as $user)
+
+                @if($invoices->count())
+                    <table class="table">
+                        <thead>
                             <tr>
-                                <td width="100">{{ $user->id }}</td>
-                                <td>
-                                    @if ($user->photo)
-                                        <img src="{{ url($user->photo) }}" width="48" height="48"
-                                            class="rounded-circle me-2" alt="Photo {{ $user->name }}">
-                                    @endif
-                                    {{ $user->name }}
-                                </td>
-                                <td>{{ $user->email }}</td>
-                                <td>
-                                    @foreach($user->roles as $role)
-                                    <span class="badge bg-secondary">{{$role->name}}</span>
-                                    @endforeach
-                                </td>
-                                <td class="text-center" width="150">
-                                    <a href="{{ route('employee.edit', $user->id) }}"
-                                        class="btn btn-warning">
-                                        <span data-feather="edit"></span>
-                                    </a>
-                                    <!--<form action="{{ route('employee.destroy', $user->id) }}" method="POST"-->
-                                    <!--    class="d-inline">-->
-                                    <!--    @csrf-->
-                                    <!--    @method('DELETE')-->
-                                    <!--    <button class="btn btn-danger"-->
-                                    <!--        onclick="return confirm('DELETE ???')">-->
-                                    <!--        <i class="fas fa-trash"></i>-->
-                                    <!--    </button>-->
-                                    <!--</form>-->
-                                </td>
+                                <th class="text-dark">STATUS</th>
+                                <th class="text-dark">DUE</th>
+                                <th class="text-dark">DATE</th>
+                                <th class="text-dark">NUMBER</th>
+                                <th class="text-dark">CUSTOMER</th>
+                                <th class="text-dark text-end">AMOUNT</th>
+                                <th class="text-dark text-end">ACTIONS</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                <div class="d-flex justify-content-end">
-                </div>
+                        </thead>
+                        <tbody>
+                            @foreach ([] as $user)
+                                <tr>
+                                    <td width="100">{{ $user->id }}</td>
+                                    <td>
+                                        @if ($user->photo)
+                                            <img src="{{ url($user->photo) }}" width="48" height="48"
+                                                class="rounded-circle me-2" alt="Photo {{ $user->name }}">
+                                        @endif
+                                        {{ $user->name }}
+                                    </td>
+                                    <td>{{ $user->email }}</td>
+                                    <td>
+                                        @foreach($user->roles as $role)
+                                        <span class="badge bg-secondary">{{$role->name}}</span>
+                                        @endforeach
+                                    </td>
+                                    <td class="text-center" width="150">
+                                        <a href="{{ route('employee.edit', $user->id) }}"
+                                            class="btn btn-warning">
+                                            <span data-feather="edit"></span>
+                                        </a>
+                                        <!--<form action="{{ route('employee.destroy', $user->id) }}" method="POST"-->
+                                        <!--    class="d-inline">-->
+                                        <!--    @csrf-->
+                                        <!--    @method('DELETE')-->
+                                        <!--    <button class="btn btn-danger"-->
+                                        <!--        onclick="return confirm('DELETE ???')">-->
+                                        <!--        <i class="fas fa-trash"></i>-->
+                                        <!--    </button>-->
+                                        <!--</form>-->
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-end">
+                    </div>
+                @else
+                    <div class="d-flex justify-content-center py-5 border-top">
+                        <div class="text-center">
+                            <div class="mb-3">Invoice tidak ditemukan</div>
+                            <a href="{{route('invoice.create')}}" class="btn btn-lg btn-outline-primary rounded-pill">Buat Invoice</a>
+                        </div>
+                    </div>
+                @endif 
             </div>
         </div>
 
     </div>
 @endsection
+

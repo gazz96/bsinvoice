@@ -5,6 +5,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,7 +24,6 @@ Route::get('/', function () {
 });
 
 
-
 Route::get('/', [AuthController::class, 'login'])->name('login');
 Route::post('/', [AuthController::class, 'checkLogin']);
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
@@ -33,3 +33,4 @@ Route::get('dashboard', [DashboardController::class, 'index']);
 Route::resource('employee', EmployeeController::class);
 Route::resource('invoice', InvoiceController::class);
 Route::resource('customer', CustomerController::class);
+Route::resource('product', ProductController::class);

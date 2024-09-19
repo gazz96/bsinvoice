@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 25, 2024 at 02:49 AM
+-- Generation Time: Sep 19, 2024 at 05:07 PM
 -- Server version: 10.2.31-MariaDB-log
 -- PHP Version: 7.4.4
 
@@ -96,7 +96,8 @@ CREATE TABLE `invoice_items` (
   `price` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `invoice_id` int(11) DEFAULT NULL
+  `invoice_id` int(11) DEFAULT NULL,
+  `position` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -262,6 +263,31 @@ CREATE TABLE `personal_access_tokens` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `products`
+--
+
+CREATE TABLE `products` (
+  `id` int(11) NOT NULL,
+  `name` varchar(250) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `price` int(11) DEFAULT NULL,
+  `is_sell` int(1) DEFAULT NULL,
+  `is_buy` int(1) DEFAULT NULL,
+  `status` varchar(30) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`id`, `name`, `description`, `price`, `is_sell`, `is_buy`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'PRODUK 1', 'INI ADALAH PRODUK BARU', 100000, NULL, NULL, 'TIDAK AKTIF', '2024-09-04 11:09:24', '2024-09-04 11:10:47');
 
 -- --------------------------------------------------------
 
@@ -467,6 +493,12 @@ ALTER TABLE `personal_access_tokens`
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
 
 --
+-- Indexes for table `products`
+--
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `roles`
 --
 ALTER TABLE `roles`
@@ -550,6 +582,12 @@ ALTER TABLE `permissions`
 --
 ALTER TABLE `personal_access_tokens`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `products`
+--
+ALTER TABLE `products`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `roles`
