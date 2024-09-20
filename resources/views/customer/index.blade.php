@@ -4,18 +4,18 @@
     <div class="container-fluid p-0">
 
         <div class="d-flex align-items-center justify-content-between mb-3">
-            <h1 class="h3 mb-0">CUSTOMER</h1>
+            <h1 class="h3 mb-0">CUSTOMERS</h1>
             <div class="d-flex justify-content-end">
                 <a class="btn btn-lg btn-primary rounded-pill" href="{{ route('customer.create') }}">
                     <span data-lucide="plus" class="me-1"></span>
-                    <span>Tambah Customer</span>
+                    <span>CREATE</span>
                 </a>
             </div>
         </div>
         <form action="">
             <div class="row mb-3 align-items-center">
                 <div class="col-md-3">
-                    <input type="text" name="s" class="form-control form-control-lg rounded-pill" value="{{ request('s') }}" placeholder="Masukan kata kunci...">
+                    <input type="text" name="s" class="form-control form-control-lg rounded-pill" value="{{ request('s') }}" placeholder="Input your keywords">
                 </div>
                 <div class="col-md-2">
 
@@ -37,7 +37,7 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th class="text-dark">NAMA</th>
+                            <th class="text-dark">NAME</th>
                             <th class="text-dark">EMAIL</th>
                             <th class="text-dark">PIC</th>
                             <th class="text-dark">PHONE</th>
@@ -47,7 +47,7 @@
                     <tbody>
                         @foreach ($customers as $customer)
                             <tr>
-                                <td>
+                                <td> 
                                     {{ $customer->name }}
                                 </td>
                                 <td>{{ $customer->email }}</td>
@@ -55,7 +55,9 @@
                                 <td>{{ $customer->phone_number }}</td>
                                 <td class="text-center" width="150">
                                     <div class="btn-group">
-                                        <button class="btn btn-lg btn-outline-primary dropdown-toggle rounded-pill" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                                        <button class="btn btn-lg btn-outline-primary dropdown-toggle rounded-pill" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <span class="bi bi-caret-down-fill"></span>
+                                        </button>
                                         <ul class="dropdown-menu dropdown-menu-end">
                                             <li>
                                                 <a href="{{ route('customer.edit', $customer->id) }}"

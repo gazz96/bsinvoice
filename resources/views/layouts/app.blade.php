@@ -34,6 +34,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Preahvihear&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link class="js-stylesheet" href="{{ url('appstack/css/light.css') }}" rel="stylesheet">
 
     <link rel="stylesheet" href="{{url('appstack/plugins/select2/select2.min.css')}}">
@@ -44,7 +45,7 @@
 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
@@ -57,8 +58,13 @@
     
     <style>
 
+        
         body {
             font-family: "Montserrat", sans-serif;
+        }
+
+        .dropdown-toggle:after {
+            display: none;
         }
 
         @media (max-width: 767px) {
@@ -497,7 +503,7 @@
 
                             <p class="mb-0">
 
-                                &copy; {{ date('Y') }} - <a href="#" class="text-muted">NXT SOFTWARE</a>
+                                &copy; {{ date('Y') }} - <a href="#" class="text-muted">BAGASTOPATI SOFTWARE</a>
 
                             </p>
 
@@ -545,7 +551,7 @@
 
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
@@ -557,9 +563,9 @@
 
         window.API_URL = BASE_URL + '/api';
 
-        toastr.options.timeOut  = 15;
+        //toastr.options.timeOut  = 15;
 
-        toastr.options.closeDuration = 150;
+        //toastr.options.closeDuration = 150;
 
         window.App = {
 
@@ -567,10 +573,7 @@
 
                 handleValidationErrors: (errors) => {
 
-                    // Clear any existing Toastr notifications
-
-                    toastr.clear();
-
+                    // Clear any existing Toast notifications
 
 
                     // Check if the errors object is not empty
@@ -582,10 +585,16 @@
                         $.each(errors, function (field, messages) {
 
                             // Display a Toastr notification for each error
-
+                            
                             $.each(messages, function(index, message) {
-
-                                toastr.error(message, field);
+                                Toastify({
+                                    text: message,
+                                    close: true,
+                                    style: {
+                                        background: "linear-gradient(#e8ae5d, #e8ae5d)"
+                                    }
+                                })
+                                .showToast();
 
                             });
 
@@ -942,6 +951,9 @@
         });
 
 
+        function toastErrorValidations(errors) {
+            
+        }
     </script>
 
 

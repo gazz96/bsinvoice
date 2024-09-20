@@ -17,8 +17,9 @@
         </div>
         
 
-        {{ html()->form($invoice->id ? 'PUT' : 'POST' , $invoice->id ? route('invoice.update', $invoice) : route('invoice.store'))->open() }}
-
+        {{ html()->form('POST' , route('invoice.store'))->id('formInvoice')->open() }}
+            
+            {{ html()->hidden('id')->value($invoice->id)->id('invoiceId') }}
 
             <div class="row">
 
@@ -39,24 +40,24 @@
                                             </select>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="row justify-content-end mb-3">
+                                            {{-- <div class="row justify-content-end mb-3">
                                                 <label for="i-code" class="col-4 col-form-label col-form-label-lg">NUMBER</label>
                                                 <div class="col-6">
-                                                    <input type="text" name="code" class="form-control form-control-lg rounded-pill" id="i-code" value="{{ old('code', $invoice->code) }}">
+                                                    <input type="text" name="code" class="form-control form-control-lg rounded-pill" id="codeInput" value="{{ old('code', $invoice->code) }}">
                                                 </div>
-                                            </div>
+                                            </div> --}}
 
                                             <div class="row justify-content-end  mb-3">
                                                 <label for="i-date" class="col-4 col-form-label col-form-label-lg">INVOICE DATE</label>
                                                 <div class="col-6">
-                                                    <input type="date" name="date" class="form-control form-control-lg rounded-pill" id="i-date" value={{ old('date', $invoice->date) }}>
+                                                    <input type="date" name="date" class="form-control form-control-lg rounded-pill" id="dateInput" value={{ old('date', $invoice->date) }}>
                                                 </div>
                                             </div>
 
                                             <div class="row justify-content-end  mb-3">
                                                 <label for="i-date" class="col-4 col-form-label col-form-label-lg">PAYMENT DUE</label>
                                                 <div class="col-6">
-                                                    <input type="date" name="date" class="form-control form-control-lg rounded-pill" id="i-date" value="{{ old('due_date', $invoice->due_date) }}">
+                                                    <input type="date" name="due_date" class="form-control form-control-lg rounded-pill" id="dueDateInput" value="{{ old('due_date', $invoice->due_date) }}">
                                                 </div>
                                             </div>
 
@@ -72,10 +73,27 @@
                                             <th class="text-dark" width="250">DESCRIPTION</th>
                                             <th class="text-dark" width="100">QUANTITY</th>
                                             <th class="text-dark" width="150">PRICE</th>
-                                            <th class="text-dark">AMOUNT</th>
+                                            <th class="text-dark text-end" width="100">AMOUNT</th>
                                         </tr>
                                     </thead>
-                                    <tbody></tbody>
+                                    <tbody>
+                                        @foreach($invoice->items ?? [] as $item)
+                                        <tr class="row-data row-{{$item->product_id}}" data-id="{{$item->product_id}}">
+                                            <td></td>
+                                            <td>{{$item->product->name ?? ''}}</td>
+                                            <td>
+                                                <input type="text" name="products[{{$item->product_id}}][description]" class="form-control rounded-pill" value="{{$item->description}}" placeholder="Enter item description">
+                                            </td> 
+                                            <td>
+                                                <input type="text" name="products[{{$item->product_id}}][qty]" class="form-control rounded-pill form-qty" value="{{$item->qty}}">
+                                            </td> 
+                                            <td>
+                                                <input type="text" name="products[{{$item->product_id}}][price]" class="form-control rounded-pill form-price" value="{{ $item->price }}">
+                                            </td>
+                                            <td class="td-amount text-end">{{$item->price * $item->qty}}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
                                     <tfoot>
                                         <tr>
                                             <th></th>
@@ -91,7 +109,7 @@
 
                                 <div class="p-3 border-top">
                                     <label for="" class="fw-bolder">Notes</label>
-                                    {{ html()->textarea('notes')->class('w-100 border-0')->placeholder('Masukan Catatan') }}
+                                    {{ html()->textarea('notes')->class('w-100 border-0')->placeholder('Masukan Catatan')->value($invoice->notes) }}
                                 </div>
                             </div>
 
@@ -101,7 +119,7 @@
                     </div>
 
                     <div class="d-flex justify-content-end">
-                        <a href="#modalProductItems" data-bs-toggle="modal" class="btn btn-lg btn-outline-primary rounded-pill me-2 fw-bolder" id="btnPreview">PREVIEW</a>
+                        {{-- <a href="#modalProductItems" data-bs-toggle="modal" class="btn btn-lg btn-outline-primary rounded-pill me-2 fw-bolder" id="btnPreview">PREVIEW</a> --}}
                         <button class="btn btn-lg btn-primary rounded-pill fw-bolder" id="btnSaveInvoice">SIMPAN</button>
                     </div>
 
@@ -187,11 +205,12 @@
             <td>
                 <input type="text" name="products[<%= id %>][price]" class="form-control rounded-pill form-price" value="<%= price %>">
             </td>
-            <td class="td-amount"><%= amount %></td>
+            <td class="td-amount text-end"><%= amount %></td>
         </tr>
     </script>
     <script>
         
+        var formInvoice = $('#formInvoice');
         var tableProductItemsElement = $('#tableProductItems');
         var rowTemplate = _.template($('#rowTemplate').html())
 
@@ -249,19 +268,43 @@
             find.find('.td-amount').html(qty * price);
         });
 
-        async function saveInvoice(data = {})
+        async function saveInvoice()
         {
+
             const response = await $.ajax({
                 method: 'POST',
                 url: "{{route('invoice.store')}}",
-                data: data
+                data: $('#formInvoice').serialize()
             });
 
-            return
+            return response;
+
         }
 
-        $(document).on('click', '#btnSaveInvoice', async function(){
+        $(document).on('click', '#btnSaveInvoice', async function(e){
+            e.preventDefault();
+            try {
+                const response = await saveInvoice();
+                $('#invoiceId').val(response.id);
+                Toastify({
+                    text: 'Berhasil menyimpan',
+                    close: true,
+                    style: {
+                        background: "linear-gradient(#3f80ea, #3f80ea)"
+                    }
+                })
+                .showToast();
+            }
+            catch(error) {
+                if(error.status == 422){
+                    App.Helpers.handleValidationErrors(error.responseJSON.errors)
+                }
+                
+            }
+            finally {
 
+            }
+            
         });
 
         $('#i-customer_id').select2({

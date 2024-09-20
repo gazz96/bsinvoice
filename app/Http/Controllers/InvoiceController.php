@@ -19,7 +19,6 @@ class InvoiceController extends Controller
         $invoices = Invoice::paginate(20);
         return view('invoice.index', [
             'invoices' => $invoices,
-
         ]);
     }
 
@@ -45,7 +44,46 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $validated = $request->validate([
+            'id' => 'nullable',
+            //'code' => 'nullable',
+            'customer_id' => 'required',
+            'date' => 'required',
+            'due_date' => 'nullable',
+            'products' => 'required',
+            'notes' => 'nullable'
+        ]);
+
+        $invoiceId = $validated['id'] ?? '';
+        
+        if(!$invoiceId)
+        {
+            $validated['status'] = 'DRAFT';
+        }
+
+        $invoice = Invoice::updateOrCreate(
+            ['id' => $invoiceId],
+            $validated 
+        );
+
+        $products = collect($validated['products']);
+        $products->each(function($product, $productId) use ($invoice) {
+            $invoice->items()
+                ->updateOrCreate(
+                    [
+                        'product_id' =>  $productId
+                    ],
+                    [
+                        'description' => $product['description'],
+                        'price' => $product['price'],
+                        'qty' => $product['qty'],
+                    ]
+                );
+        });
+
+        return response()
+            ->json($invoice->load('items'), 200);
     }
 
     /**
@@ -67,7 +105,11 @@ class InvoiceController extends Controller
      */
     public function edit(Invoice $invoice)
     {
-        //
+        return view('invoice.form', [
+            'invoice' => $invoice,
+            'customers' => Customer::orderBy('name', 'ASC')->get(),
+            'products' => Product::orderBy('name', 'ASC')->get()
+        ]);
     }
 
     /**

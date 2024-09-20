@@ -4,18 +4,18 @@
     <div class="container-fluid p-0">
 
         <div class="d-flex align-items-center justify-content-between mb-3">
-            <h1 class="h3 mb-0">PRODUCT</h1>
+            <h1 class="h3 mb-0">PRODUCTS</h1>
             <div class="d-flex justify-content-end">
                 <a class="btn btn-lg btn-primary rounded-pill" href="{{ route('product.create') }}">
                     <span data-lucide="plus" class="me-1"></span>
-                    <span>Tambah Product</span>
+                    <span>CREATE</span>
                 </a>
             </div>
         </div>
         <form action="">
             <div class="row mb-3 align-items-center">
                 <div class="col-md-3">
-                    <input type="text" name="s" class="form-control form-control-lg rounded-pill" value="{{ request('s') }}" placeholder="Masukan kata kunci...">
+                    <input type="text" name="s" class="form-control form-control-lg rounded-pill" value="{{ request('s') }}" placeholder="Input your keywords">
                 </div>
                 <div class="col-md-2">
 
@@ -37,9 +37,9 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th class="text-dark">NAMA</th>
-                            <th class="text-dark">KETERANGAN</th>
-                            <th class="text-dark">HARGA</th>
+                            <th class="text-dark">NAME</th>
+                            <th class="text-dark">DESCRIPTIONS</th>
+                            <th class="text-dark">PRICE</th>
                             <th class="text-dark">STATUS</th>
                             <th width="100"></th>
                         </tr>
@@ -55,7 +55,9 @@
                                 <td>{{ $product->status }}</td>
                                 <td class="text-center" width="150">
                                     <div class="btn-group">
-                                        <button class="btn btn-lg btn-outline-primary dropdown-toggle rounded-pill" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                                        <button class="btn btn-lg btn-outline-primary dropdown-toggle rounded-pill" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <span class="bi bi-caret-down-fill"></span>
+                                        </button>
                                         <ul class="dropdown-menu dropdown-menu-end">
                                             <li>
                                                 <a href="{{ route('product.edit', $product->id) }}"

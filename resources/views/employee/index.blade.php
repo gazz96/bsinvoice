@@ -7,7 +7,7 @@
         <form action="">
             <div class="row mb-3 align-items-center">
                 <div class="col-md-3">
-                    <input type="text" name="s" class="form-control form-control-lg rounded-pill" value="{{ request('s') }}" placeholder="Masukan kata kunci...">
+                    <input type="text" name="s" class="form-control form-control-lg rounded-pill" value="{{ request('s') }}" placeholder="Input your keywords">
                 </div>
                 <div class="col-md-2">
                     <select name="role_id" id="filter-role_id" class="form-control form-control-lg rounded-pill">
