@@ -14,6 +14,12 @@ class Customer extends Model
         'email',
         'phone_number',
         'address',
-        'pic'
+        'pic',
+        'currency_id'
     ];
+    
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class);
+    }
 }

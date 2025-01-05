@@ -40,7 +40,7 @@ class Menu extends Model
 
     public function items()
     {
-        return $this->hasMany(Menu::class);
+        return $this->hasMany(Menu::class, 'menu_parent');
     }
     
     public function parent_menu()
@@ -48,4 +48,4 @@ class Menu extends Model
         return $this->belongsTo(Menu::class, 'menu_parent');
     }
     
-}   
+}
