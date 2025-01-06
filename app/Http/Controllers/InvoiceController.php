@@ -134,4 +134,40 @@ class InvoiceController extends Controller
     {
         //
     }
+    
+    public function preview(Invoice $invoice)
+    {
+        return view('invoice.preview', [
+            'invoice' => $invoice
+        ]);
+    }
+    
+    public function approve(Invoice $invoice)
+    {
+        $invoice->update([
+            'status' => 'UNPAID',
+        ]);
+        
+        return back()
+            ->with('status', 'success')
+            ->with('message', 'Invoice Approved');
+    }
+    
+    public function record(Invoice $invoice)
+    {
+        $invoice->update([
+            'status' => 'PAID',
+        ]);
+        
+        return back()
+            ->with('status', 'success')
+            ->with('message', 'Invoice Recorded');
+    }
+    
+    public function print(Invoice $invoice)
+    {
+        return view('invoice.print', [
+            'invoice' => $invoice
+        ]);
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Currency;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -38,7 +39,8 @@ class CustomerController extends Controller
     public function create()
     {
         return view('customer.form', [
-            'customer' => new Customer()
+            'customer' => new Customer(),
+            'currencies' => Currency::all()
         ]);
     }
 
@@ -55,7 +57,8 @@ class CustomerController extends Controller
             'email' => 'nullable|email',
             'phone_number' => 'nullable',
             'address' => 'nullable',
-            'pic' => 'nullable'
+            'pic' => 'nullable',
+            'currency_id' => 'nullable'
         ]);
 
         Customer::create($validated);
@@ -85,7 +88,8 @@ class CustomerController extends Controller
     public function edit(Customer $customer)
     {
         return view('customer.form', [
-            'customer' => $customer
+            'customer' => $customer,
+            'currencies' => Currency::all()
         ]);
     }
 
@@ -103,7 +107,8 @@ class CustomerController extends Controller
             'email' => 'nullable|email',
             'phone_number' => 'nullable',
             'address' => 'nullable',
-            'pic' => 'nullable'
+            'pic' => 'nullable',
+            'currency_id' => 'nullable'
         ]);
 
         $customer->update($validated);

@@ -4,9 +4,20 @@
     <div class="container-fluid p-0">
 
         <div class="d-flex align-items-center justify-content-between mb-3">
-            <h1 class="h3 mb-0">CUSTOMERS</h1>
+            <h1 class="h3 mb-0">SCHEDULES</h1>
             <div class="d-flex justify-content-end">
-                <a class="btn btn-lg btn-primary rounded-pill" href="{{ route('customer.create') }}">
+                
+                <a class="btn btn-lg btn-primary rounded-pill me-2" href="{{ route('schedule.main') }}">
+                    <span data-lucide="calendar" class="me-1"></span>
+                    <span>MAIN</span>
+                </a>
+                
+                <a class="btn btn-lg btn-primary rounded-pill me-2" href="{{ route('schedule.daily') }}">
+                    <span data-lucide="calendar-check" class="me-1"></span>
+                    <span>DAILY</span>
+                </a>
+                
+                <a class="btn btn-lg btn-primary rounded-pill" href="{{ route('schedule.create') }}">
                     <span data-lucide="plus" class="me-1"></span>
                     <span>CREATE</span>
                 </a>
@@ -37,27 +48,43 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th class="text-dark">NAME</th>
-                            <th class="text-dark">EMAIL</th>
-                            <th class="text-dark">PIC</th>
-                            <th class="text-dark">PHONE</th>
-                            <th class="text-dark">CURRENCY</th>
+                            <th class="text-dark">CUSTOMER</th>
+                            <th class="text-dark">ROUTE</th>
+                            <th class="text-dark">NIGHT</th>
+                            <th class="text-dark">ARRIVAL</th>
+                            <th class="text-dark">DEPARTURE</th>
                             <th width="100"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($customers as $customer)
+                        @foreach ($schedules as $schedule)
                             <tr>
                                 <td> 
-                                    {{ $customer->name }}
+                                    {{ $schedule->customer->name ?? '' }}
                                 </td>
-                                <td>{{ $customer->email }}</td>
-                                <td>{{ $customer->pic }}</td>
-                                <td>{{ $customer->phone_number }}</td>
                                 <td>
-                                    @if($customer->currency)
-                                    {{ $customer->currency->name ?? ''}} ({{$customer->currency->code}})
+                                    <div>{{ $schedule->schedule_type }}</div>
+                                </td>
+                                <td>
+                                    @if($schedule->schedule_type == "MEKKAH -> MADINAH")
+                                    {{$schedule->mekkah_night}}/{{$schedule->madinah_night}}
                                     @endif
+                                    
+                                    @if($schedule->schedule_type == "MADINAH -> MEKKAH")
+                                    {{$schedule->madinah_night}}/{{$schedule->mekkah_night}}
+                                    @endif
+                                </td>
+                                <td>
+                                    <div>
+                                        <div>{{ $schedule->arrival_date }}</div>
+                                        <div>{{ $schedule->arrival_flight_info }}</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <div>{{ $schedule->departure_date }}</div>
+                                        <div>{{ $schedule->departure_flight_info }}</div>
+                                    </div>
                                 </td>
                                 <td class="text-center" width="150">
                                     <div class="btn-group">
@@ -66,9 +93,15 @@
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-end">
                                             <li>
-                                                <a href="{{ route('customer.edit', $customer->id) }}"
+                                                <a href="{{ route('schedule.edit', $schedule->id) }}"
                                                     class="dropdown-item">
                                                     Edit
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ route('schedule.manage', $schedule->id) }}"
+                                                    class="dropdown-item">
+                                                    Manage Task
                                                 </a>
                                             </li>
                                         </ul>
@@ -81,7 +114,7 @@
                     </tbody>
                 </table>
                 <div class="d-flex justify-content-end">
-                    {{ $customers->links() }}
+                    {{ $schedules->links() }}
                 </div>
 
             </div>

@@ -23,7 +23,7 @@
                     <div class="card border rounded-4">
                         <div class="card-body">
                             <div class="mb-3">
-                                <label for="">NAMA</label>
+                                <label for="">CUSTOMER NAME</label>
                                 {{ html()->text('name')->class('form-control form-control-lg rounded-pill')->value(old('name', $customer->name)) }}
                                 @error('name')
                                 <span class="d-block invalid-feedback">{{$message}}</span>
@@ -44,13 +44,18 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="">NOMOR HP</label>
+                                <label for="">PHONE NUMBER</label>
                                 {{ html()->text('phone_number')->class('form-control form-control-lg rounded-pill')->value(old('phone_number', $customer->phone_number)) }}
                             </div>
 
                             <div class="mb-3">
-                                <label for="">ALAMAT</label>
-                                {{ html()->textarea('address')->class('form-control form-control-lg rounded-pill')->value(old('address', $customer->address)) }}
+                                <label for="">ADDRESS</label>
+                                {{ html()->textarea('address')->class('form-control form-control-lg rounded-4')->value(old('address', $customer->address)) }}
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="">CURRENCY</label>
+                                {{ html()->select('currency_id')->options($currencies->pluck('name', 'id'))->class('form-control form-control-lg rounded-pill')->value(old('currency_id', $customer->currency_id)) }}
                             </div>
 
 

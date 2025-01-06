@@ -4,9 +4,9 @@
     <div class="container-fluid p-0">
 
         <div class="d-flex align-items-center justify-content-between mb-3">
-            <h1 class="h3 mb-0">CUSTOMERS</h1>
+            <h1 class="h3 mb-0">TEAMS</h1>
             <div class="d-flex justify-content-end">
-                <a class="btn btn-lg btn-primary rounded-pill" href="{{ route('customer.create') }}">
+                <a class="btn btn-lg btn-primary rounded-pill" href="{{ route('team.create') }}">
                     <span data-lucide="plus" class="me-1"></span>
                     <span>CREATE</span>
                 </a>
@@ -38,27 +38,17 @@
                     <thead>
                         <tr>
                             <th class="text-dark">NAME</th>
-                            <th class="text-dark">EMAIL</th>
-                            <th class="text-dark">PIC</th>
-                            <th class="text-dark">PHONE</th>
-                            <th class="text-dark">CURRENCY</th>
+                            <th class="text-dark">STATUS</th>
                             <th width="100"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($customers as $customer)
+                        @foreach ($teams as $team)
                             <tr>
                                 <td> 
-                                    {{ $customer->name }}
+                                    {{ $team->name }}
                                 </td>
-                                <td>{{ $customer->email }}</td>
-                                <td>{{ $customer->pic }}</td>
-                                <td>{{ $customer->phone_number }}</td>
-                                <td>
-                                    @if($customer->currency)
-                                    {{ $customer->currency->name ?? ''}} ({{$customer->currency->code}})
-                                    @endif
-                                </td>
+                                <td>{{ $team->status }}</td>
                                 <td class="text-center" width="150">
                                     <div class="btn-group">
                                         <button class="btn btn-lg btn-outline-primary dropdown-toggle rounded-pill" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -66,7 +56,7 @@
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-end">
                                             <li>
-                                                <a href="{{ route('customer.edit', $customer->id) }}"
+                                                <a href="{{ url('team/create/' . $team->id) }}"
                                                     class="dropdown-item">
                                                     Edit
                                                 </a>
@@ -81,7 +71,7 @@
                     </tbody>
                 </table>
                 <div class="d-flex justify-content-end">
-                    {{ $customers->links() }}
+                    {{ $teams->links() }}
                 </div>
 
             </div>

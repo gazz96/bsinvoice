@@ -8,9 +8,14 @@ use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
-    function login()
+    function login(Request $request)
     {
         return view('login');
+        if($request->maintenance) {
+            return view('login');    
+        }
+        
+        return 'Updating...';
     }
 
     function checkLogin(Request $request)

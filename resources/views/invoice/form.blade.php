@@ -255,14 +255,18 @@
         });
 
 
-        $(document).on('keyup', '.form-price', function(){
+        $(document).on('keyup', '.form-price, .form-qty', function(){
             let find = $(this).closest('tr');
 
             const formQtyInput = find.find('.form-qty');
             const formPriceInput = find.find('.form-price');
-
+            
             let qty = parseInt(formQtyInput.val());
             let price = parseInt(formPriceInput.val());
+
+            if(isNaN(qty)) {
+                qty = 0;
+            }
             
             formQtyInput.val(qty);
             find.find('.td-amount').html(qty * price);
