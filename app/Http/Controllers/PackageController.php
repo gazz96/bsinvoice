@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
+use App\Models\Hotel;
 use App\Models\Package;
 use Illuminate\Http\Request;
 
@@ -22,9 +24,24 @@ class PackageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('package.form');
+        $package = $request->id ? Package::find($request->id) :  new Package;
+        $customers = Customer::orderBy('name')->get();
+        $hotelMadinah = Hotel::where('location_id', 2)
+            ->orderBy('name', 'ASC')
+            ->get();
+
+        $hotelMakkah = Hotel::where('location_id', 1)
+            ->orderBy('name', 'ASC')
+            ->get();
+
+        return view('package.form', [
+            'package' => $package,
+            'customers' => $customers,
+            'hotelMadinah' => $hotelMadinah,
+            'hotelMakkah' => $hotelMakkah
+        ]);
     }
 
     /**
@@ -35,7 +52,7 @@ class PackageController extends Controller
      */
     public function store(Request $request)
     {
-        
+        dd($request->all());
     }
 
     /**
